@@ -1,16 +1,16 @@
 import torch
 from torch import nn
 
-from .loss_interface import LossInterface
+from .fitness_interface import FitnessInterface
 
 
 def map_number(n, start1, stop1, start2, stop2):
     return ((n - start1) / (stop1 - start1)) * (stop2 - start2) + start2
 
 
-class EdgeLoss(LossInterface):
+class EdgeFitness(FitnessInterface):
     def __init__(self):
-        super(EdgeLoss, self).__init__()
+        super(EdgeFitness, self).__init__()
 
         self.edge_thickness = 5
         self.edge_margins = None

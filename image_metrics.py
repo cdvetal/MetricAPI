@@ -21,16 +21,16 @@ clip_model = "ViT-B/32"
 model_32, preprocess_32 = clip.load("ViT-B/32", device=device)
 model_14, preprocess_14 = clip.load("ViT-L/14", device=device)
 
-metrics = {"symmetry": SymmetryLoss(),
-           "aesthetic": AestheticLoss(model_32, preprocess_32),
-           "aesthetic2": Aesthetic2Loss(model_14, preprocess_14),
+metrics = {"symmetry": SymmetryFitness(),
+           "aesthetic": AestheticFitness(model_32, preprocess_32),
+           "aesthetic2": Aesthetic2Fitness(model_14, preprocess_14),
            # "style": StyleLoss(),
-           "edge": EdgeLoss(),
-           "gaussian": GaussianLoss(),
+           "edge": EdgeFitness(),
+           "gaussian": GaussianFitness(),
            # "palette": PaletteFitness(),
-           "resmem": ResmemLoss(),
-           "smoothness": SmoothnessLoss(),
-           "saturation": SaturationLoss(),
+           "resmem": ResmemFitness(),
+           "smoothness": SmoothnessFitness(),
+           "saturation": SaturationFitness(),
            }
 
 clip_prompt = ClipPrompt(model_32, preprocess_32)

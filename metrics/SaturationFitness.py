@@ -1,11 +1,11 @@
 import torch
 
-from .loss_interface import LossInterface
+from .fitness_interface import FitnessInterface
 
 
-class SaturationLoss(LossInterface):
+class SaturationFitness(FitnessInterface):
     def __init__(self):
-        super(SaturationLoss, self).__init__()
+        super(SaturationFitness, self).__init__()
 
     def evaluate(self, img, normalization=False):
         img = img.to(self.device)
@@ -19,5 +19,5 @@ class SaturationLoss(LossInterface):
         mean_rggb = torch.sqrt(rg_mean ** 2 + yb_mean ** 2)
         colorfullness = std_rggb + .3 * mean_rggb
 
-        return colorfullness / 10.0
+        return colorfullness
 

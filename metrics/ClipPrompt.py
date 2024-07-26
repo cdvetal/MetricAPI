@@ -5,7 +5,7 @@ import torchvision.transforms as T
 from torch import nn
 from torch.nn import functional as F
 
-from .loss_interface import LossInterface
+from .fitness_interface import FitnessInterface
 
 
 def spherical_dist_loss(x, y):
@@ -110,7 +110,7 @@ class MakeCutouts(nn.Module):
         return cutouts
 
 
-class ClipPrompt(LossInterface):
+class ClipPrompt(FitnessInterface):
     def __init__(self, model=None, preprocess=None, clip_model="ViT-B/32"):
         super(ClipPrompt, self).__init__()
 

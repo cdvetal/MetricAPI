@@ -5,10 +5,10 @@ import torch
 import torchvision
 from PIL import Image
 
-from .loss_interface import LossInterface
+from .fitness_interface import FitnessInterface
 
 
-class InputImage(LossInterface):
+class InputImage(FitnessInterface):
     def __init__(self, input_image, model=None, preprocess=None, clip_model="ViT-B/32"):
         super(InputImage, self).__init__()
 

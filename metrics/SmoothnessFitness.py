@@ -4,7 +4,7 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 
-from .loss_interface import LossInterface
+from .fitness_interface import FitnessInterface
 
 
 class GaussianSmoothing(nn.Module):
@@ -73,9 +73,9 @@ class GaussianSmoothing(nn.Module):
         return self.conv(input, weight=self.weight, groups=self.groups)
 
 
-class SmoothnessLoss(LossInterface):
+class SmoothnessFitness(FitnessInterface):
     def __init__(self):
-        super(SmoothnessLoss, self).__init__()
+        super(SmoothnessFitness, self).__init__()
 
         self.smoothness_type = 'log'
         self.smoothness_gaussian_kernel = 0
@@ -104,4 +104,4 @@ class SmoothnessLoss(LossInterface):
             sharpness = torch.log(torch.ones_like(sharpness) + sharpness)
         sharpness = torch.mean(sharpness)
 
-        return sharpness * 0.5
+        return sharpness

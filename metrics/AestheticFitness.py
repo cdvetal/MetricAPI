@@ -7,7 +7,7 @@ import torchvision
 from torch import nn
 from torch.nn import functional as F
 
-from .loss_interface import LossInterface
+from .fitness_interface import FitnessInterface
 
 
 def wget_file(url, out):
@@ -19,9 +19,9 @@ def wget_file(url, out):
         print("Ignoring non-zero exit: ", output)
 
 
-class AestheticLoss(LossInterface):
+class AestheticFitness(FitnessInterface):
     def __init__(self, model=None, preprocess=None, clip_model="ViT-B/16"):
-        super(AestheticLoss, self).__init__()
+        super(AestheticFitness, self).__init__()
         self.aesthetic_target = 1
         # Only available here: https://twitter.com/RiversHaveWings/status/1472346186728173568
         self.model_path = Path("models/ava_vit_b_16_linear.pth")
@@ -75,6 +75,6 @@ class AestheticLoss(LossInterface):
 
         image_features = self.model.encode_image(img)
 
-        aes_rating = self.ae_reg(F.normalize(image_features.float(), dim=-1)).to(self.device) * 0.02
+        aes_rating = self.ae_reg(F.normalize(image_features.float(), dim=-1)).to(self.device)
 
         return aes_rating

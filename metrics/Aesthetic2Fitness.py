@@ -7,7 +7,7 @@ import torchvision
 from torch import nn
 from torch.nn import functional as F
 
-from .loss_interface import LossInterface
+from .fitness_interface import FitnessInterface
 
 
 def normalized(a, axis=-1, order=2):
@@ -53,9 +53,9 @@ def wget_file(url, out):
         print("Ignoring non-zero exit: ", output)
 
 
-class Aesthetic2Loss(LossInterface):
+class Aesthetic2Fitness(FitnessInterface):
     def __init__(self, model=None, preprocess=None, clip_model="ViT-L/14"):
-        super(Aesthetic2Loss, self).__init__()
+        super(Aesthetic2Fitness, self).__init__()
         self.aesthetic_target = 1
         # Available here: https://github.com/christophschuhmann/improved-aesthetic-predictor
         self.model_path = Path("models/sac+logos+ava1-l14-linearMSE.pth")
@@ -67,8 +67,6 @@ class Aesthetic2Loss(LossInterface):
 
         self.mlp = MLP(768).to(self.device)
         self.mlp.load_state_dict(torch.load(self.model_path, map_location=self.device))
-        self.target_rating = torch.ones(size=(1, 1)) * self.aesthetic_target
-        self.target_rating = self.target_rating.to(self.device)
 
         self.clip_model = clip_model
 
@@ -115,6 +113,6 @@ class Aesthetic2Loss(LossInterface):
 
         image_features = self.model.encode_image(img)
 
-        aes_rating = self.mlp(F.normalize(image_features.float(), dim=-1)).to(self.device) * 0.02
+        aes_rating = self.mlp(F.normalize(image_features.float(), dim=-1)).to(self.device)
 
         return aes_rating

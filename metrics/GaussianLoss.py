@@ -1,6 +1,6 @@
 import torch
 
-from .loss_interface import LossInterface
+from .fitness_interface import FitnessInterface
 
 
 def gaussian_fn(M, std):
@@ -18,7 +18,7 @@ def gkern(ylen=256, xlen=256, stdy=128, stdx=128):
     return gkern2d
 
 
-class GaussianLoss(LossInterface):
+class GaussianLoss(FitnessInterface):
     def __init__(self):
         super(GaussianLoss, self).__init__()
 

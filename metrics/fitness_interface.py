@@ -1,7 +1,7 @@
 import torch
 
 
-class LossInterface:
+class FitnessInterface:
     """
     All these fitnesses are developed to be maximized.
     """

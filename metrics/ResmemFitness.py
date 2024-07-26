@@ -6,7 +6,7 @@ import torch
 from resmem import ResMem
 from torchvision import transforms
 
-from .loss_interface import LossInterface
+from .fitness_interface import FitnessInterface
 
 resmem_url = 'https://github.com/pixray/resmem/releases/download/1.1.3_model/model.pt'
 
@@ -31,9 +31,9 @@ def map_number(n, start1, stop1, start2, stop2):
     return ((n - start1) / (stop1 - start1)) * (stop2 - start2) + start2
 
 
-class ResmemLoss(LossInterface):
+class ResmemFitness(FitnessInterface):
     def __init__(self):
-        super(ResmemLoss, self).__init__()
+        super(ResmemFitness, self).__init__()
         # make sure resmem has model file
         if not os.path.exists(resmem.path):
             wget_file(resmem_url, resmem.path)
@@ -54,7 +54,6 @@ class ResmemLoss(LossInterface):
         # print(prediction.shape)
         mean = torch.mean(prediction)
         # loss seems to bottom out at 0.4? ¯\_(ツ)_/¯
-        mapped_mean = map_number(mean, 0.4, 1.0, 0, 1)
-        cur_loss = 0.05 * mapped_mean
+        cur_fitness = map_number(mean, 0.4, 1.0, 0, 1)
 
-        return cur_loss
+        return cur_fitness

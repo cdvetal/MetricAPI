@@ -9,7 +9,7 @@ import torchvision.transforms as transforms
 from PIL import Image
 import torchvision.transforms.functional as TF
 
-from .loss_interface import LossInterface
+from .fitness_interface import FitnessInterface
 
 
 class Vgg16_Extractor(nn.Module):
@@ -446,7 +446,7 @@ def strotss_loss(out_tensor, style_tensor, content_weight=1.0 * 16.0,
     return total_loss
 
 
-class StyleLoss(LossInterface):
+class StyleLoss(FitnessInterface):
     def __init__(self, style_file=None):
         super(StyleLoss, self).__init__()
 
